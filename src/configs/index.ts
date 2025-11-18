@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({
+  path: "./src/.env",
+});
 
 export interface EnvConfig {
   CLAUDE_API_KEY: string;
@@ -18,7 +20,10 @@ export interface ConfigSchema {
 type Coercer = (value: string) => any;
 
 const coercers: { [type: string]: Coercer } = {
-  string: (v) => v,
+  string: (v) => {
+    if (v.trim()) return v;
+    throw new Error(`Empty string not allowed`);
+  },
   number: (v) => {
     const n = Number(v);
     if (isNaN(n)) throw new Error(`Invalid number: ${v}`);
