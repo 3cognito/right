@@ -3,3 +3,5 @@ architecture.md
 plan.txt
 *.env
 local.test.ts
+launch.json
+todo.txt
